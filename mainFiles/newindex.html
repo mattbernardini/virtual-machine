@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<title>ASM Project</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="styles/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="styles/codemirror.css">
+<script src="js/codemirror.js"></script>
+<script src="js/javascript.js"></script>
+<script src="js/asmcompiler.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="js/syntaxCheck.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    textarea {
+        width: 100%;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+    }
+    .w3-theme-gradient {
+        color: #000 !important;
+        background:-webkit-linear-gradient(top,#999999 30%,#f1f1f1 70%)}
+    .w3-theme-gradient2 {
+        color: #000 !important;
+        background:-webkit-linear-gradient(top,#f1f1f1 30%,#999999 70%)}
+
+    .test{
+        padding-top: 10px;
+    }
+
+    .test2{
+        padding-left: 5px;
+    }
+    aButton{
+        width: 95%;
+    }
+
+    div.c{
+        display: none;
+    }
+    div.d{
+        display: none;
+    }
+
+    @media only screen and (max-width: 600px) {
+        div.a{
+            display: none;
+        }
+        div.b{
+            display: none;
+        }
+        div.c{
+            display: block;
+        }
+        div.d{
+            display: inline;
+        }
+    }
+
+
+    .CodeMirror{
+        height: auto;
+        width: auto;
+
+    }
+    .dropbtn {
+        box-sizing: border-box;
+        background-color: grey;
+        color: black;
+        padding: 8px;
+        font-size: 12px;
+        border: none;
+        cursor: pointer;
+
+    }
+
+    .dropbtn:hover, .dropbtn:focus {
+        background-color: #2980B9;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 100% !important;
+        padding-bottom: 15px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: grey;
+        width:100%;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown a:hover {background-color: #ddd;}
+
+    .show {display: block;}
+
+    .test{display:none;}
+</style>
+
+<body>
+
+<!-- Side Navigation -->
+<nav class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-center" style="display:none" id="mySidebar">
+    <h1 class="w3-xxxlarge w3-text-theme">Menu</h1>
+    <span onclick="document.getElementById('mySidebar').style.display='none'"
+          class="w3-button w3-display-topright">×</span>
+    <a href="#" class="w3-bar-item w3-button">Home</a>
+    <a href="#" class="w3-bar-item w3-button">Documentation</a>
+    <a href="#" class="w3-bar-item w3-button">Examples</a>
+    <a href="#" class="w3-bar-item w3-button">About</a>
+</nav>
+
+<!-- Header -->
+<header class="w3-container w3-padding w3-theme" id="myHeader">
+    <i onclick="w3_open()" class="fa fa-bars w3-xlarge w3-button w3-theme"></i>
+    <div class="w3-center">
+        <h4>University of Missouri-St. Louis</h4>
+        <h1 class="w3-xxlarge w3-animate-bottom">ASM Interpreter</h1>
+        <div class="w3-padding-32">
+            <button class="w3-btn w3-xlarge w3-grey w3-hover-yellow" onclick="document.getElementById('id01').style.display='block'" style="font-weight:900;">LEARN HOW IT WORKS</button>
+        </div>
+    </div>
+</header>
+
+<!-- Modal -->
+
+
+<div id="id01" class="test w3-modal" >
+    <div class="w3-modal-content w3-card-4 w3-animate-top" style="height: 99%">
+        <div class="w3-bar w3-border-bottom w3-theme-l1">
+            <button class="tablink w3-bar-item w3-button" onclick="openCity(event, 'London')">Language</button>
+            <button class="tablink w3-bar-item w3-button" onclick="openCity(event, 'Paris')">Architecture</button>
+
+        </div>
+
+
+
+        <header id="London" class="w3-container w3-theme-l1 city" style="height: 100%;">
+            <span onclick="document.getElementById('id01').style.display='none'"
+                  class="w3-button w3-display-topright">×</span>
+            <h4>Modal Containing ASM Documentation</h4>
+            <iframe src="./Files/VM_Language.pdf" style="height: 90%;" width=100%></iframe>
+        </header>
+
+
+
+
+        <header id="Paris" class="city w3-container w3-theme-l1 test" style="height: 100%;">
+            <span onclick="document.getElementById('id01').style.display='none'"
+                  class="w3-button w3-display-topright">×</span>
+            <h4>Modal Containing ASM Documentation</h4>
+            <div style="height: 100%;">
+                <iframe src="./Files/VM_Architecture.pdf" style="height: 90%;" width=100%></iframe>
+            </div>
+        </header>
+
+
+
+
+    </div>
+</div>
+
+
+<div id="middleContainer">
+
+
+    <div class="w3-row-padding w3-center w3-margin-top">
+
+        <div class="w3-third" >
+            <div id="ASM" class="w3-card w3-container" style="text-align: left !important; min-height:460px;">
+                <h3>ASM Code</h3><br>
+                <div class="dropdown w3-block">
+                    <button onclick="myFunction()" class="dropbtn w3-bar-block w3-button w3-block">Click here for more examples</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#home">Example 1</a>
+                        <a href="#about">Example 2</a>
+                        <a href="#contact">Example 3</a>
+                    </div>
+                </div>
+                <br>
+                <div id="editorBox"  class="CodeMirror" oninput="syntaxCheck()" onkeyup="backspaceCheck(editor, event)" style="width: 100%">
+                    <!-- Editor box -->
+                    <textarea id="code" name="code" style="text-align: left !important" oninput="parseProgram()"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="w3-third" style="height:460px">
+            <div id="STDIN" class="w3-card w3-container w3-padding" style="height: 50%">
+                <h3>Variables</h3><br>
+                <i class="w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+                <div id="variableFrame"></div>
+            </div>
+            <div id="OUT" class="w3-card w3-container" style="height: 50%">
+                <h3>Output</h3><br>
+
+                <textarea id="consoleBox" style="height: 125PX"></textarea>
+            </div>
+        </div>
+
+        <div class="w3-third" style="height:460px">
+            <div id="STACK" class="w3-card w3-container" style="height: 50%">
+                <h3>Stack</h3><br>
+                <i class="w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+                <div id="stackFrame"></div>
+            </div>
+            <div id="ACC" class="w3-card w3-container" style="height: 50%">
+                <h3>Accumulator</h3><br>
+                <i class=" w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+                <div id="accumlator"></div>
+                <h3>Instruction Pointer</h3>
+                <i class=" w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
+                <div id="instructionPointer"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="w3-row-padding w3-center w3-margin-top">
+        <div class="w3-third w3-padding-16" >
+            <div class="a w3-half w3-hide-small">
+
+                <input type="file" accept=".txt,.asm" name="myfile" onchange="uploadfile(this)"/>
+            </div>
+            <div class="b w3-half w3-hide-small">
+                <button type="button" id="bButton" class="cWidth w3-btn w3-large w3-grey w3-hover-yellow" style="width: 95%" onclick="reset()" style="font-weight:900;">Reset</button>
+            </div>
+
+        </div>
+
+        <div class="w3-third w3-padding-16" >
+            <div class="a w3-half w3-hide-small">
+                <button type="button" id="fButton" class="cWidth w3-btn w3-large w3-grey w3-hover-yellow" style="width: 95%" onclick="downloadfile('txt')" style="font-weight:900;">Download .txt</button>
+            </div>
+            <div class="b w3-half w3-hide-small">
+                <button type="button" id="gButton" class="cWidth w3-btn w3-large w3-grey w3-hover-yellow" style="width: 95%" onclick="downloadfile('asm')" style="font-weight:900;">Download .asm</button>
+            </div>
+
+        </div>
+
+        <div class="w3-third w3-padding-16" >
+            <div class="a w3-half w3-hide-small">
+                <button type="button" id="jButton" class="cWidth w3-btn w3-large w3-grey w3-hover-yellow" style="width: 95%" onclick="runNextCommand()" style="font-weight:900;">Next Instruction</button>
+            </div>
+            <div class="b w3-half w3-hide-small">
+                <button type="button" id="kButton" class="cWidth w3-btn w3-large w3-grey w3-hover-yellow" style="width: 95%" onclick="compilerCheck()" style="font-weight:900;">Run</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-container w3-padding w3-theme">
+    <h3>Footer</h3>
+    <p>Placeholder</p>
+    <div style="position:relative;bottom:55px;" class="w3-tooltip w3-right">
+        <span class="w3-text w3-theme-light w3-padding">Go To Top</span> 
+        <a class="w3-text-white" href="#myHeader"><span class="w3-xlarge">
+    <i class="fa fa-chevron-circle-up"></i></span></a>
+    </div>
+    <p>Insert other links here</p>
+</footer>
+
+<!-- Script for Sidebar, Tabs, Accordions, Progress bars and slideshows -->
+<script>
+    // Side navigation
+    function w3_open() {
+        var x = document.getElementById("mySidebar");
+        x.style.width = "20%";
+        x.style.fontSize = "30px";
+        x.style.paddingTop = "10%";
+        x.style.display = "block";
+    }
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+    }
+
+    function asm(){
+        document.getElementById('ASM').classList.add("w3-light-green");
+        document.getElementById('pButton').disabled = false;
+    }
+
+    function process(){
+
+        document.getElementById('STDIN').style.backgroundColor='Yellow';
+        document.getElementById('OUT').style.backgroundColor='Cyan';
+    }
+
+    // Tabs
+    function openCity(evt, cityName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("city");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].classList.remove("w3-light-grey");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.classList.add("w3-light-grey");
+    }
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    // Accordions
+    function myAccFunc(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+
+    // Slideshows
+    var slideIndex = 1;
+
+    function plusDivs(n) {
+        slideIndex = slideIndex + n;
+        showDivs(slideIndex);
+    }
+
+    // Progress Bars
+    function move() {
+        var elem = document.getElementById("myBar");
+        var width = 5;
+        var id = setInterval(frame, 10);
+        function frame() {
+            if (width == 100) {
+                clearInterval(id);
+            } else {
+                width++;
+                elem.style.width = width + '%';
+                elem.innerHTML = width * 1  + '%';
+            }
+        }
+    }
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        continueComments: "Enter",
+        extraKeys: {"Ctrl-Q": "toggleComment"}
+    });
+    var labelIndex = -1;
+    var lineIndex = 0;
+    var ip = 0;
+    var hitStop = false;
+    var syntaxCheckFlag = 0;
+    function uploadfile(input) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            editor.setValue(e.target.result);
+            parseProgram();
+            buildVariables();
+            setAccumulator();
+            setInstructionOn();
+        }
+        reader.readAsText(input.files[0]);
+
+    }
+    function clearStack() {
+        document.getElementById("stackFrame").innerHTML = "";
+    }
+    function clearVariables() {
+        document.getElementById("variableFrame").innerHTML = "";
+    }
+    function setInstructionOn () {
+        document.getElementById("instructionPointer").innerHTML = ip;
+    }
+    function setAccumulator(){
+        document.getElementById("accumlator").innerHTML = ACC;
+    }
+    function buildStack() {
+        clearStack();
+        var ul = document.createElement('ul');
+        ul.setAttribute('id','proList');
+
+        //let g = document.getElementById("stackFrame");
+        document.getElementById("stackFrame").appendChild(ul);
+        STACK.forEach(renderProductList);
+
+        function renderProductList(element, index, arr) {
+            var li = document.createElement('li');
+            li.setAttribute('class','item');
+
+            ul.appendChild(li);
+
+            li.innerHTML=li.innerHTML + element;
+        }
+    }
+    function buildVariables() {
+        clearVariables();
+        var ul = document.createElement('ul');
+        ul.setAttribute('id','proList');
+
+        //let g = document.getElementById("stackFrame");
+        document.getElementById("variableFrame").appendChild(ul);
+        VARS.forEach(renderProductList);
+
+        function renderProductList(element, index, arr) {
+            var li = document.createElement('li');
+            li.setAttribute('class','item');
+
+            ul.appendChild(li);
+
+            li.innerHTML=li.innerHTML + element.name + ":" + element.value;
+        }
+    }
+    function reset() {
+        clearElements();
+        clearStack();
+        clearVariables();
+        ip = 0;
+        ACC = 0;
+        setAccumulator();
+        setInstructionOn();
+        hitStop = false;
+    }
+    function downloadfile(extension)
+    {
+        var text = editor.getValue();
+        text = text.replace(/\n/g, "\r\n")
+        var fileBlob = new Blob([text], {type: "text/plain"});
+        var fileName = "editor." + extension;
+
+        var link = document.createElement("a");
+        link.download = fileName;
+        link.innerHTML = "Download Editor Content";
+
+        window.URL = window.URL || window.webkitURL;
+        link.href = window.URL.createObjectURL(fileBlob);
+        link.onclick = removeClickElement;
+        link.style.display = "none";
+
+        document.body.appendChild(link);
+        link.click();
+    }
+
+    function removeClickElement(e)
+    {
+        document.body.removeChild(e.target);
+    }
+    function parseProgram () {
+        labelIndex = -1;
+        var stopFlag = false;
+        var strline;
+        while(lineIndex < editor.lineCount())
+        {
+            strline = editor.getLine(lineIndex).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+            if(strline.length > 0)
+            {
+                addBranchLabel(strline, lineIndex);
+            }
+            if(strline.indexOf("STOP") !== -1)
+                stopFlag = true;
+            else if(stopFlag && strline.length > 0)
+            {
+                addVar(strline);
+            }
+            lineIndex++;
+            if(ERRORS.length > 0)
+            {
+                document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+                return;
+            }
+        }
+    }
+    function runNextCommand()
+    {
+        try {
+            stopFlag = false;
+            lineIndex = 0;
+            if (ip < editor.lineCount())
+            {
+                strline = editor.getLine(ip).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+
+                //if nonempty string and first element is a label, splice off the label
+                if(!(!strline.join("").trim() || strline.join("").length === 0) && strline[0].charAt(strline[0].length - 1) === ':')
+                {
+                    strline.splice(0, 1);
+                }
+                if(strline.indexOf("STOP") !== -1)
+                {
+                    stopFlag = true;
+                    hitStop = true;
+                    return;
+                }
+                if(!stopFlag && !(!strline.join("").trim() || strline.join("").length === 0))
+                {
+                    parseFunction(strline);
+                }
+                // updateStack();
+                if(labelIndex > -1)
+                {
+                    ip = labelIndex;
+                    labelIndex = -1;
+                }
+                else
+                {
+                    ip++;
+                }
+                buildStack();
+                buildVariables();
+                setInstructionOn();
+                setAccumulator();
+                if(ERRORS.length > 0)
+                {
+                    document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+                    return;
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+
+    function fds()
+    {
+        clearElements();
+        lineIndex = 0;
+        labelIndex = -1;
+        var stopFlag = false;
+        var strline;
+        while(lineIndex < editor.lineCount())
+        {
+            strline = editor.getLine(lineIndex).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+            if(strline.length > 0)
+            {
+                addBranchLabel(strline, lineIndex);
+            }
+            if(strline.indexOf("STOP") !== -1)
+                stopFlag = true;
+            else if(stopFlag && strline.length > 0)
+            {
+                addVar(strline);
+            }
+            lineIndex++;
+            if(ERRORS.length > 0)
+            {
+                document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+                return;
+            }
+        }
+        stopFlag = false;
+        lineIndex = 0;
+        while(ip < editor.lineCount())
+        {
+            strline = editor.getLine(ip).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+
+            //if nonempty string and first element is a label, splice off the label
+            if(!(!strline.join("").trim() || strline.join("").length === 0) && strline[0].charAt(strline[0].length - 1) === ':')
+            {
+                strline.splice(0, 1);
+            }
+            if(strline.indexOf("STOP") !== -1)
+                stopFlag = true;
+            if(!stopFlag && !(!strline.join("").trim() || strline.join("").length === 0))
+            {
+                parseFunction(strline);
+            }
+
+            if(labelIndex > -1)
+            {
+                ip = labelIndex;
+                labelIndex = -1;
+            }
+            else
+            {
+                ip++;
+            }
+            if(ERRORS.length > 0)
+            {
+                document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+                return;
+            }
+        }
+        setInstructionOn();
+        setAccumulator();
+        document.getElementById("consoleBox").innerHTML = STDOUT.join("\n");
+    }
+    function compilerCheck(){
+        if(syntaxCheckFlag === 0){
+            fds();
+        }
+        else{
+            console.log("ERRORS exist");
+        }
+    }
+    function syntaxCheck() {
+        clearElements2();
+        syntoCheck(editor);
+        parseProgram();
+        buildVariables();
+        if(ERRORS.length > 0) {
+            document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+            //disable compile button
+        }
+        else{
+            document.getElementById("consoleBox").innerHTML = "";
+            //enable compile button
+        }
+    }
+</script>
+
+</body>
+</html>

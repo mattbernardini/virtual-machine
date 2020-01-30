@@ -1,0 +1,73 @@
+DOCUMENTATION
+* All functions and variables are to be written in upper-case. Variables must start with a letter and then can be followed with letters and/or numbers.
+* Storage of values can be in:
+    - Accumulator (ACC).
+    - Stack.
+    - Named variables.
+* Instructions consist of an instruction and arguments, space-delimited. Instructions may be preceded with a label that ends with a colon (labelname:).
+* Instructions for naming variables are to be made after the STOP instruction. After variable name comes a value representing the initial value of the variable.
+* All names and variables should consist of a length of up to 8 characters.
+* ADD, SUB, MULT, DIV, WRITE, LOAD can take arg as either a variable or a number literal.
+-----------------------------------------------------------------------------------------------------------------
+ADD arg
+Adds to the accumulator by the amount of arg.
+-----------------------------------------------------------------------------------------------------------------
+BR arg
+Jumps to the branch with the label named in arg.
+-----------------------------------------------------------------------------------------------------------------
+BRNEG arg
+Jumps to the branch with the label named in arg if Accumulator is less than zero.
+-----------------------------------------------------------------------------------------------------------------
+BRZNEG arg
+Jumps to the branch with the label named in arg if Accumulator is less than or equal to zero.
+-----------------------------------------------------------------------------------------------------------------
+BRPOS arg
+Jumps to the branch with the label named in arg if Accumulator is more than zero.
+-----------------------------------------------------------------------------------------------------------------
+BRZPOS arg
+Jumps to the branch with the label named in arg if Accumulator is more than or equal to zero.
+-----------------------------------------------------------------------------------------------------------------
+BRZERO arg
+Jumps to the branch with the label named in arg if Accumulator is equal to zero.
+-----------------------------------------------------------------------------------------------------------------
+COPY arg1 arg2
+Copies the value of arg2 into arg1.
+-----------------------------------------------------------------------------------------------------------------
+DIV arg
+Divides the accumulator by the amount of arg.
+-----------------------------------------------------------------------------------------------------------------
+MULT arg
+Multiplies the accumulator by the amount of arg.
+-----------------------------------------------------------------------------------------------------------------
+READ arg
+Reads input and stores it to arg.
+-----------------------------------------------------------------------------------------------------------------
+WRITE arg
+Writes the value of arg to output.
+-----------------------------------------------------------------------------------------------------------------
+STOP
+Stops the program entirely.
+-----------------------------------------------------------------------------------------------------------------
+STORE arg
+Stores the value of the Accumulator into arg.
+-----------------------------------------------------------------------------------------------------------------
+SUB arg
+Subtracts from the accumulator by the amount of arg.
+-----------------------------------------------------------------------------------------------------------------
+NOOP
+Do nothing.
+-----------------------------------------------------------------------------------------------------------------
+LOAD arg
+Stores the value of arg into the Accumulator.
+-----------------------------------------------------------------------------------------------------------------
+PUSH
+Allocates a new element to the stack.
+-----------------------------------------------------------------------------------------------------------------
+POP
+Deallocate the top of stack.
+-----------------------------------------------------------------------------------------------------------------
+STACKW arg
+Stores the value of the Accumulator into the arg'th element down the stack.
+-----------------------------------------------------------------------------------------------------------------
+STACKR arg
+Stores the value of the arg'th element down the stack into the Accumulator.

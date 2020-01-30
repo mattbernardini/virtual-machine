@@ -1,0 +1,21 @@
+{
+  "name": "softwareprof",
+  "version": "1.0.0",
+  "description": "Enhance or replace current virtual machine for assembling assembly programs.",
+  "main": "mainFiles/compile.js",
+  "dependencies": {
+    "node": "^11.12.0",
+    "nodejs": "^0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://comp.umsl.edu/gitlab/smdy8/software-professions-project.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
