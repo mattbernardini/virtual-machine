@@ -188,3 +188,165 @@ function syntoCheck(editor){
     }
 
 }
+
+function parseProgram () {
+    labelIndex = -1;
+    var stopFlag = false;
+    var strline;
+    while(lineIndex < editor.lineCount())
+    {
+        strline = editor.getLine(lineIndex).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+        if(strline.length > 0)
+        {
+            addBranchLabel(strline, lineIndex);
+        }
+        if(strline.indexOf("STOP") !== -1)
+            stopFlag = true;
+        else if(stopFlag && strline.length > 0)
+        {
+            addVar(strline);
+        }
+        lineIndex++;
+        if(ERRORS.length > 0)
+        {
+            document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+            return;
+        }
+    }
+}
+function runNextCommand()
+{
+    try {
+        stopFlag = false;
+        lineIndex = 0;
+        if (ip < editor.lineCount())
+        {
+            strline = editor.getLine(ip).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+
+            //if nonempty string and first element is a label, splice off the label
+            if(!(!strline.join("").trim() || strline.join("").length === 0) && strline[0].charAt(strline[0].length - 1) === ':')
+            {
+                strline.splice(0, 1);
+            }
+            if(strline.indexOf("STOP") !== -1)
+            {
+                stopFlag = true;
+                hitStop = true;
+                return;
+            }
+            if(!stopFlag && !(!strline.join("").trim() || strline.join("").length === 0))
+            {
+                parseFunction(strline);
+            }
+            // updateStack();
+            if(labelIndex > -1)
+            {
+                ip = labelIndex;
+                labelIndex = -1;
+            }
+            else
+            {
+                ip++;
+            }
+            buildStack();
+            buildVariables();
+            setInstructionOn();
+            setAccumulator();
+            if(ERRORS.length > 0)
+            {
+                document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+                return;
+            }
+        }
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+function fds()
+{
+    clearElements();
+    lineIndex = 0;
+    labelIndex = -1;
+    var stopFlag = false;
+    var strline;
+    while(lineIndex < editor.lineCount())
+    {
+        strline = editor.getLine(lineIndex).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+        if(strline.length > 0)
+        {
+            addBranchLabel(strline, lineIndex);
+        }
+        if(strline.indexOf("STOP") !== -1)
+            stopFlag = true;
+        else if(stopFlag && strline.length > 0)
+        {
+            addVar(strline);
+        }
+        lineIndex++;
+        if(ERRORS.length > 0)
+        {
+            document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+            return;
+        }
+    }
+    stopFlag = false;
+    lineIndex = 0;
+    while(ip < editor.lineCount())
+    {
+        strline = editor.getLine(ip).trim().split(/(\s+)/).filter( e => e.trim().length > 0);
+
+        //if nonempty string and first element is a label, splice off the label
+        if(!(!strline.join("").trim() || strline.join("").length === 0) && strline[0].charAt(strline[0].length - 1) === ':')
+        {
+            strline.splice(0, 1);
+        }
+        if(strline.indexOf("STOP") !== -1)
+            stopFlag = true;
+        if(!stopFlag && !(!strline.join("").trim() || strline.join("").length === 0))
+        {
+            parseFunction(strline);
+        }
+
+        if(labelIndex > -1)
+        {
+            ip = labelIndex;
+            labelIndex = -1;
+        }
+        else
+        {
+            ip++;
+        }
+        if(ERRORS.length > 0)
+        {
+            document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+            return;
+        }
+    }
+    setInstructionOn();
+    setAccumulator();
+    document.getElementById("consoleBox").innerHTML = STDOUT.join("\n");
+}
+function compilerCheck(){
+    if(syntaxCheckFlag === 0){
+        fds();
+    }
+    else{
+        console.log("ERRORS exist");
+    }
+}
+function syntaxCheck() {
+    clearElements2();
+    syntoCheck(editor);
+    parseProgram();
+    buildVariables();
+    if(ERRORS.length > 0) {
+        document.getElementById("consoleBox").innerHTML = ERRORS.join("\n");
+        //disable compile button
+    }
+    else{
+        document.getElementById("consoleBox").innerHTML = "";
+        //enable compile button
+    }
+}
